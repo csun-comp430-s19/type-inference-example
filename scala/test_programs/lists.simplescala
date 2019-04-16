@@ -1,0 +1,137 @@
+algebraic Option[A] = Some(A) | None(Unit)
+algebraic List[A] = Cons((A, List[A])) | Nil(Unit)
+
+def map[A](list: List[A]): (A => A) => List[A] =
+  fn =>
+    list match {
+      case Cons(cell) =>
+        cell match {
+          case (head, tail) =>
+            Cons((fn(head), map(tail)(fn)))
+        }
+      case Nil(x) => Nil(x)
+    }
+
+def foldLeft[A, B](list: List[A]): B => (B => A => B) => B =
+  accum =>
+  fn =>
+    list match {
+      case Cons(cell) =>
+        cell match {
+          case (head, tail) =>
+            foldLeft(tail)(fn(accum)(head))(fn)
+        }
+      case Nil(x) => accum
+    }
+
+def append[A](l1: List[A]): List[A] => List[A] =
+  l2 =>
+    l1 match {
+      case Nil(x) => l2
+      case Cons(cell) =>
+        cell match {
+          case (head, tail) =>
+            Cons((head, append(tail)(l2)))
+        }
+    }
+
+def flatMap[A, B](list: List[A]): (A => List[B]) => List[B] =
+  fn =>
+    list match {
+      case Cons(cell) =>
+        cell match {
+          case (first, second) =>
+            append(fn(first))(flatMap(second)(fn))
+        }
+      case Nil(x) => Nil(x)
+    }
+
+def filter[A](list: List[A]): (A => Boolean) => List[A] =
+  fn =>
+    list match {
+      case Cons(cell) =>
+        cell match {
+          case (first, second) => {
+            val rest = filter(second)(fn)
+            if (fn(first))
+             Cons((first, rest))
+            else
+             rest
+          }
+        }
+      case Nil(x) => Nil(x)
+    }
+
+def foldRight[A, B](list: List[A]): B => (A => B => B) => B =
+  accum =>
+  fn =>
+    list match {
+      case Cons(cell) =>
+        cell match {
+          case (head, tail) =>
+            fn(head)(foldRight(tail)(accum)(fn))
+        }
+      case Nil(x) => accum
+    }
+
+def take[A](list: List[A]): Int => List[A] =
+  i =>
+    if (i <= 0)
+      Nil(unit)
+    else
+      list match {
+        case Cons(cell) =>
+          cell match {
+            case (head, tail) =>
+              Cons((head, take(tail)(i - 1)))
+          }
+        case Nil(x) => Nil(x)
+      }
+
+def drop[A](list: List[A]): Int => List[A] =
+  i =>
+    if (i <= 0)
+      list
+    else
+      list match {
+        case Cons(cell) =>
+          cell match {
+            case (first, second) =>
+              drop(second)(i - 1)
+          }
+        case Nil(x) => Nil(x)
+      }
+
+def safeHead[A](list: List[A]): Option[A] =
+  list match {
+    case Cons(cell) =>
+      cell match {
+        case (first, second) => Some(first)
+      }
+    case Nil(x) => None(unit)
+  }
+
+def safeTail[A](list: List[A]): Option[List[A]] =
+  list match {
+    case Cons(cell) =>
+      cell match {
+        case (first, second) => Some(second)
+      }
+    case Nil(x) => None(unit)
+  }
+
+def isEmpty[A](list: List[A]): Boolean =
+  list match {
+    case Cons(cell) => false
+    case Nil(x) => true
+  }
+
+def length[A](list: List[A]): Int =
+  list match {
+    case Cons(cell) =>
+      cell match {
+        case (first, second) =>
+          1 + length(second)
+      }
+    case Nil(x) => 0
+  }

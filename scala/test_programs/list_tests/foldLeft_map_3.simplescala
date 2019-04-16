@@ -1,0 +1,12 @@
+{
+  // intEqual: Int => Int => Boolean
+  val intEqual = x => y => x <= y && y <= x
+
+  // addMap: (Int => Option[Int]) => Int => Int => Int => Option[Int]
+  val addMap = map => key => value => x => if (intEqual(key)(x)) Some(value) else map(key)
+  addMap(x => None(unit))(1)(2)(1)
+}
+;;;
+Some(2)
+;;;
+Option[Int]

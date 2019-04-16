@@ -1,0 +1,5 @@
+foldLeft(Nil(unit))("foo")(x => y => x ++ y)
+;;;
+"foo"
+;;;
+String

@@ -1,0 +1,9 @@
+{
+  // intEqual: Int => Int => Boolean
+  val intEqual = x => y => x <= y && y <= x
+  intEqual(1)(2)
+}
+;;;
+false
+;;;
+Boolean

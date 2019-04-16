@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>simplescala_experimentation</groupId>
+  <artifactId>simplescala_experimentation</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>simplescala_experimentation</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+	<groupId>org.pitest</groupId>
+	<artifactId>pitest-maven</artifactId>
+	<version>1.2.5</version>
+	<configuration>
+	  <targetClasses>
+	    <param>simplescala_experimentation.typechecker.*</param>
+	  </targetClasses>
+	  <targetTests>
+	    <param>simplescala_experimentation.typechecker.TestBase</param>
+	  </targetTests>
+	  <threads>
+	    12
+	  </threads>
+	  <jvmArgs>
+	    <value>-Xmx16384m</value>
+	  </jvmArgs>
+	</configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
