@@ -67,6 +67,11 @@ def ::= `def` fn[T*](x: type): type = exp // top-level function definition
 program ::= tdef* def* exp
 ```
 
+## Formalism ##
+
+A mathematical formalism of how this typechecker works has been provided in `formalism.pdf`.
+It is not expected that you will be able to understand this in one sitting, but it's incredibly concise relative to the code.
+
 ## Code ##
 
 The typechecker for SimpleScala has been implemented in both Scala and Java.
@@ -76,6 +81,11 @@ For the typechecker code, see:
 
 - Scala: `scala/src/main/scala/polytyped/typechecker.scala`
 - Java: `java/simplescala_experimentation/src/main/java/simplescala_experimentation/typechecker/Typechecker.java`
+
+### Testing ###
+
+The code was originally tested via an experimental automated approach.
+While it mostly lacks a traditional unit test suite, I am highly confident that it is correct.
 
 ## Basic Idea ##
 
